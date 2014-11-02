@@ -242,7 +242,10 @@ let colors_name = "solarized"
 " neutral gray monotone palette component)
 if (has("gui_running") && g:solarized_degrade == 0)
     let s:vmode       = "gui"
-    let s:base03      = "#002b36"
+    let s:base06      = "#032d39" " White on background with 1.5% transparency
+    let s:base05      = "#30515f"
+    let s:base04      = "#194f5f"
+    let s:base03      = "#002b36" " Background
     let s:base02      = "#073642"
     let s:base01      = "#586e75"
     let s:base00      = "#657b83"
@@ -258,12 +261,15 @@ if (has("gui_running") && g:solarized_degrade == 0)
     let s:blue        = "#268bd2"
     let s:cyan        = "#2aa198"
     "let s:green       = "#859900" "original
-    let s:green       = "#719e07" "experimental
+    let s:green       = "#2ea300" "experimental
 elseif (has("gui_running") && g:solarized_degrade == 1)
     " These colors are identical to the 256 color mode. They may be viewed
     " while in gui mode via "let g:solarized_degrade=1", though this is not
     " recommened and is for testing only.
     let s:vmode       = "gui"
+    let s:base06      = "#052f3b" " White on background with 1.5% transparency
+    let s:base05      = "#225a73"
+    let s:base04      = "#14404d"
     let s:base03      = "#1c1c1c"
     let s:base02      = "#262626"
     let s:base01      = "#4e4e4e"
@@ -282,6 +288,9 @@ elseif (has("gui_running") && g:solarized_degrade == 1)
     let s:green       = "#5f8700"
 elseif g:solarized_termcolors != 256 && &t_Co >= 16
     let s:vmode       = "cterm"
+    let s:base06      = "10"
+    let s:base05      = "10"
+    let s:base04      = "10"
     let s:base03      = "8"
     let s:base02      = "0"
     let s:base01      = "10"
@@ -300,6 +309,9 @@ elseif g:solarized_termcolors != 256 && &t_Co >= 16
     let s:green       = "2"
 elseif g:solarized_termcolors == 256
     let s:vmode       = "cterm"
+    let s:base06      = "236"
+    let s:base05      = "236"
+    let s:base04      = "236"
     let s:base03      = "234"
     let s:base02      = "235"
     let s:base01      = "239"
@@ -335,6 +347,9 @@ else
 "   let s:blue        = "4"
 "   let s:cyan        = "6"
 "   let s:green       = "2"
+    let s:base06      = "Gray"
+    let s:base05      = "Gray"
+    let s:base04      = "Gray"
     let s:base03      = "DarkGray"      " 0*
     let s:base02      = "Black"         " 0
     let s:base01      = "LightGreen"    " 2*
@@ -436,6 +451,9 @@ endif
 
 exe "let s:bg_none      = ' ".s:vmode."bg=".s:none   ."'"
 exe "let s:bg_back      = ' ".s:vmode."bg=".s:back   ."'"
+exe "let s:bg_base06    = ' ".s:vmode."bg=".s:base06 ."'"
+exe "let s:bg_base05    = ' ".s:vmode."bg=".s:base05 ."'"
+exe "let s:bg_base04    = ' ".s:vmode."bg=".s:base04 ."'"
 exe "let s:bg_base03    = ' ".s:vmode."bg=".s:base03 ."'"
 exe "let s:bg_base02    = ' ".s:vmode."bg=".s:base02 ."'"
 exe "let s:bg_base01    = ' ".s:vmode."bg=".s:base01 ."'"
@@ -455,6 +473,9 @@ exe "let s:bg_cyan      = ' ".s:vmode."bg=".s:cyan   ."'"
 
 exe "let s:fg_none      = ' ".s:vmode."fg=".s:none   ."'"
 exe "let s:fg_back      = ' ".s:vmode."fg=".s:back   ."'"
+exe "let s:fg_base06    = ' ".s:vmode."fg=".s:base06 ."'"
+exe "let s:fg_base05    = ' ".s:vmode."fg=".s:base05 ."'"
+exe "let s:fg_base04    = ' ".s:vmode."fg=".s:base04 ."'"
 exe "let s:fg_base03    = ' ".s:vmode."fg=".s:base03 ."'"
 exe "let s:fg_base02    = ' ".s:vmode."fg=".s:base02 ."'"
 exe "let s:fg_base01    = ' ".s:vmode."fg=".s:base01 ."'"
@@ -493,6 +514,9 @@ exe "let s:fmt_revbbu   = ' ".s:vmode."=NONE".s:r.s:bb.s:u." term=NONE".s:r.s:bb
 if has("gui_running")
     exe "let s:sp_none      = ' guisp=".s:none   ."'"
     exe "let s:sp_back      = ' guisp=".s:back   ."'"
+    exe "let s:sp_base06    = ' guisp=".s:base06 ."'"
+    exe "let s:sp_base05    = ' guisp=".s:base05 ."'"
+    exe "let s:sp_base04    = ' guisp=".s:base04 ."'"
     exe "let s:sp_base03    = ' guisp=".s:base03 ."'"
     exe "let s:sp_base02    = ' guisp=".s:base02 ."'"
     exe "let s:sp_base01    = ' guisp=".s:base01 ."'"
@@ -512,6 +536,9 @@ if has("gui_running")
 else
     let s:sp_none      = ""
     let s:sp_back      = ""
+    let s:sp_base06    = ""
+    let s:sp_base05    = ""
+    let s:sp_base04    = ""
     let s:sp_base03    = ""
     let s:sp_base02    = ""
     let s:sp_base01    = ""
@@ -536,9 +563,9 @@ endif
 " note that link syntax to avoid duplicate configuration doesn't work with the
 " exe compiled formats
 
-exe "hi! Normal"         .s:fmt_none   .s:fg_base0  .s:bg_back
+exe "hi! Normal"         .s:fmt_none   .s:fg_base0  .s:bg_base03
 
-exe "hi! Comment"        .s:fmt_ital   .s:fg_base01 .s:bg_none
+exe "hi! Comment"        .s:fmt_ital   .s:fg_green .s:bg_none
 "       *Comment         any comment
 
 exe "hi! Constant"       .s:fmt_none   .s:fg_cyan   .s:bg_none
@@ -553,7 +580,7 @@ exe "hi! Identifier"     .s:fmt_none   .s:fg_blue   .s:bg_none
 "       *Identifier      any variable name
 "        Function        function name (also: methods for classes)
 "
-exe "hi! Statement"      .s:fmt_none   .s:fg_green  .s:bg_none
+exe "hi! Statement"      .s:fmt_none   .s:fg_yellow  .s:bg_none
 "       *Statement       any statement
 "        Conditional     if, then, else, endif, switch, etc.
 "        Repeat          for, do, while, etc.
@@ -603,11 +630,11 @@ if      (g:solarized_visibility=="high")
     exe "hi! SpecialKey" .s:fmt_revr   .s:fg_red    .s:bg_none
     exe "hi! NonText"    .s:fmt_bold   .s:fg_red    .s:bg_none
 elseif  (g:solarized_visibility=="low")
-    exe "hi! SpecialKey" .s:fmt_bold   .s:fg_base02 .s:bg_none
-    exe "hi! NonText"    .s:fmt_bold   .s:fg_base02 .s:bg_none
+    exe "hi! SpecialKey" .s:fmt_bold   .s:fg_base05 .s:bg_none
+    exe "hi! NonText"    .s:fmt_none   .s:fg_base04 .s:bg_none
 else
-    exe "hi! SpecialKey" .s:fmt_bold   .s:fg_base00 .s:bg_base02
-    exe "hi! NonText"    .s:fmt_bold   .s:fg_base00 .s:bg_none
+    exe "hi! SpecialKey" .s:fmt_bold   .s:fg_base05 .s:bg_none
+    exe "hi! NonText"    .s:fmt_none   .s:fg_base04 .s:bg_none
 endif
 exe "hi! StatusLine"     .s:fmt_none   .s:fg_base1  .s:bg_base02 .s:fmt_revbb
 exe "hi! StatusLineNC"   .s:fmt_none   .s:fg_base00 .s:bg_base02 .s:fmt_revbb
@@ -667,12 +694,12 @@ exe "hi! PmenuThumb"     .s:fmt_none   .s:fg_base0  .s:bg_base03  .s:fmt_revbb
 exe "hi! TabLine"        .s:fmt_undr   .s:fg_base0  .s:bg_base02  .s:sp_base0
 exe "hi! TabLineFill"    .s:fmt_undr   .s:fg_base0  .s:bg_base02  .s:sp_base0
 exe "hi! TabLineSel"     .s:fmt_undr   .s:fg_base01 .s:bg_base2   .s:sp_base0  .s:fmt_revbbu
-exe "hi! CursorColumn"   .s:fmt_none   .s:fg_none   .s:bg_base02
-exe "hi! CursorLine"     .s:fmt_uopt   .s:fg_none   .s:bg_base02  .s:sp_base1
-exe "hi! ColorColumn"    .s:fmt_none   .s:fg_none   .s:bg_base02
+exe "hi! CursorColumn"   .s:fmt_none   .s:fg_none   .s:bg_base06
+exe "hi! CursorLine"     .s:fmt_undr   .s:fg_none   .s:bg_none  .s:sp_base1
+exe "hi! ColorColumn"    .s:fmt_none   .s:fg_none   .s:bg_base06
 exe "hi! Cursor"         .s:fmt_none   .s:fg_base03 .s:bg_base0
 hi! link lCursor Cursor
-exe "hi! MatchParen"     .s:fmt_bold   .s:fg_red    .s:bg_base01
+exe "hi! MatchParen"     .s:fmt_bold   .s:fg_yellow    .s:bg_base01
 
 "}}}
 " vim syntax highlighting "{{{
@@ -729,7 +756,7 @@ hi! link diffLine Identifier
 "exe "hi! gitDiffAdded"
 "exe "hi! gitDiffRemoved"
 "gitcommit
-"exe "hi! gitcommitSummary"      
+"exe "hi! gitcommitSummary"
 exe "hi! gitcommitComment"      .s:fmt_ital     .s:fg_base01    .s:bg_none
 hi! link gitcommitUntracked gitcommitComment
 hi! link gitcommitDiscarded gitcommitComment
